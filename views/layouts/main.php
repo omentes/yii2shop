@@ -47,25 +47,17 @@ AppAsset::register($this);
                     ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
                 ],
             ],
-            [
-                'label' => 'Dropdown',
-                'items' => [
-                    ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
-                    "<li class='divider'></li>",
-                    "<li class='dropdown-header'>Dropdown Header</li>",
-                    ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
-                ],
-            ],
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => Yii::t('app', 'Блог'), 'url' => ['/site/index']],
+            ['label' => Yii::t('app', 'О нас'), 'url' => ['/site/about']],
+            ['label' => Yii::t('app', 'Контакты'), 'url' => ['/site/contact']],
+            ['label' => Yii::t('app', 'Админка'), 'url' => ['/admin']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => Yii::t('app', 'Логин'), 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    Yii::t('app', 'Выход') . ' (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -92,9 +84,6 @@ AppAsset::register($this);
         <p class="pull-right">developed by <?= Html::a('omentes', 'https://fb.me/setnemo') ?>
         </br>
             </p>
-        <div style="float:left">
-
-        </div>
     </div>
 </footer>
 

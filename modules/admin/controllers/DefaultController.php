@@ -15,8 +15,8 @@ class DefaultController extends AppAdminController
     {
         return $this->render('index');
     }
-    public function actionIndexTest()
+    public function actionTest()
     {
-        return "test";
+        return $this->render('index');
     }
 }

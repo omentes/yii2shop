@@ -81,12 +81,14 @@ $config = [
             'enableStrictParsing' => true,
             'class' => 'klisl\languages\UrlManager',
             'rules' => [
+//                '/admin/test' => 'admin/default/index',
+                '/admin/<action>' => 'admin/default/<action>',
                 '/admin' => 'admin/default/index',
                 'languages' => 'languages/default/index', //для модуля мультиязычности
                 //далее создаем обычные правила
 //                'category/<slug:\w+>' => 'category/view',
                 '<action:(index|about|contact|login|)>' => '/site/<action>',
-//                '<controller>/<action>' => '<controller>/<action>',
+                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
     ],
