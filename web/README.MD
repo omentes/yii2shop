@@ -1,10 +1,10 @@
 # TODO list
 
 ## TODO
-- add prototype widget for menu (constructor with db)
-- breadcrumbs
 - add admin area
 - add helpers block
+    - add prototype widget for menu (constructor with db)
+    - breadcrumbs
     - add slider
     - add left banner
     - add left menu widget
@@ -36,10 +36,13 @@
     - add favorites
 - add language
 - add currency
+- add db structure for user
+- add db structure for category
+- add db structure for product
     
-
 ## DONE
 - create basic project (0.5)
 - add .env with settings and change web.php (0.5)
 - add .htaccess at home and web directory, add to web.php url rules (0.5)
-- add db structure
+- add AdminLTE (6)
+

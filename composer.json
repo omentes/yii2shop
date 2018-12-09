@@ -18,7 +18,9 @@
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "yiithings/yii2-dotenv": "*"
+        "yiithings/yii2-dotenv": "*",
+        "dmstr/yii2-adminlte-asset": "^2.1",
+        "klisl/yii2-languages": "^2.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

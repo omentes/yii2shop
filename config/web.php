@@ -1,5 +1,7 @@
 <?php
 
+use dmstr\web\AdminLteAsset;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -9,16 +11,42 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru-RU',
     'defaultRoute' => '/',
+    'sourceLanguage' => 'ru', // использовать в качестве ключей переводов
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+    ],
+    'modules' => [
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'layout' => 'main',
+        ],
+        'languages' => [
+            'class' => 'klisl\languages\Module',
+            //Языки используемые в приложении
+            'languages' => [
+                'English' => 'en',
+                'Русский' => 'ru',
+                'Українська' => 'uk',
+            ],
+            'default_language' => 'ru', //основной язык (по-умолчанию)
+            'show_default' => false, //true - показывать в URL основной язык, false - нет
+        ],
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => env('VALIDATION_KEY'),
             'baseUrl' => '',
+            'class' => 'klisl\languages\Request'
 
+        ],
+        'assetManager' => [
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-red',
+                ],
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -50,7 +78,11 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => true,
+            'class' => 'klisl\languages\UrlManager',
             'rules' => [
+                'languages' => 'languages/default/index', //для модуля мультиязычности
+                //далее создаем обычные правила
 //                'category/<slug:\w+>' => 'category/view',
                 '<action:(index|about|contact|login|)>' => '/site/<action>',
 //                '<controller>/<action>' => '<controller>/<action>',
@@ -72,6 +104,14 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
+        'generators' => [ // HERE
+            'crud' => [
+                'class' => 'yii\gii\generators\crud\Generator',
+                'templates' => [
+                    'custom' => '@vendor/dmstr/yii2-adminlte-asset/gii/templates/crud/simple/views',
+                ]
+            ]
+        ],
         // uncomment the following to add your IP if you are not connecting from localhost.
         'allowedIPs' => ['127.0.0.1', '::1'],
     ];

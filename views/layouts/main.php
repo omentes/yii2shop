@@ -87,9 +87,14 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <?= klisl\languages\widgets\ListWidget::widget(['class' => 'pull-left']) ?>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">developed by <?= Html::a('omentes', 'https://fb.me/setnemo') ?>
+        </br>
+            </p>
+        <div style="float:left">
+
+        </div>
     </div>
 </footer>
 
