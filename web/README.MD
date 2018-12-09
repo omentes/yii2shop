@@ -2,6 +2,39 @@
 
 ## TODO
 - add admin area
+    - add management users
+    - add management category
+    - add management product
+    - add management order
+    - add manage images
+    - add editor for textarea blocks
+    - add management for helpers block
+        - add construct menu
+        - add manage slider
+        - add manage left banner
+        - add manage left menu widget
+        - add manage highlight string banner
+    - add manage info from
+        - header
+        - footer
+        - robots.txt
+    - add manage sitemap.xml
+    - add manage google analytics
+    - add chat with admins
+    - add dashboard
+    - add manage dashboard
+    - add manage order property (delivery etc)
+    - add manage cache for all cache pages (with rules and clear all)
+    - add import and export for mass editing in excel
+    - add manage auto generated tags (change rules)
+    - add manage auto generated images tags and file names
+    - add auto generated related products
+    - add manage promo-codes
+    - add manage sales
+    - add notification
+    - add sms notification
+    - add manage site settings (global: logo, lang, etc)
+     
 - add helpers block
     - add prototype widget for menu (constructor with db)
     - breadcrumbs
@@ -42,12 +75,14 @@
 - add db structure for user
 - add db structure for category
 - add db structure for product
-    
+- add canonical tag
+- add hreflang tag
+
 ## DONE
 - create basic project (0.5)
 - add .env with settings and change web.php (0.5)
 - add .htaccess at home and web directory, add to web.php url rules (0.5)
-- add AdminLTE (6)
-- add language (2)
+- add AdminLTE Module (6)
+- add language Module yii2-languages (2)
 
 
