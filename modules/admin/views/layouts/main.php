@@ -36,7 +36,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="<?= \dmstr\helpers\AdminLteHelper::skinClass("black") ?>">
+    <body class="<?= \dmstr\helpers\AdminLteHelper::skinClass() ?>">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 
