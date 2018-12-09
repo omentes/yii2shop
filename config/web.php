@@ -36,7 +36,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => env('VALIDATION_KEY'),
+            'cookieValidationKey' => 'erL87TOAAvzQZvEf8v3sGgg4I6ikiQME',
             'baseUrl' => '',
             'class' => 'klisl\languages\Request'
 
