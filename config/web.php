@@ -81,6 +81,7 @@ $config = [
             'enableStrictParsing' => true,
             'class' => 'klisl\languages\UrlManager',
             'rules' => [
+                '/admin' => 'admin/default/index',
                 'languages' => 'languages/default/index', //для модуля мультиязычности
                 //далее создаем обычные правила
 //                'category/<slug:\w+>' => 'category/view',
