@@ -38,6 +38,24 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            [
+                'label' => 'Dropdown',
+                'items' => [
+                    ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                    "<li class='divider'></li>",
+                    "<li class='dropdown-header'>Dropdown Header</li>",
+                    ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+                ],
+            ],
+            [
+                'label' => 'Dropdown',
+                'items' => [
+                    ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                    "<li class='divider'></li>",
+                    "<li class='dropdown-header'>Dropdown Header</li>",
+                    ['label' => 'Level 1 - Dropdown B', 'url' => '#'],
+                ],
+            ],
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
