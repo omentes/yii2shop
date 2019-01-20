@@ -36,8 +36,8 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => env("VALIDATION_CODE"),
-//            'cookieValidationKey' => '',
+//            'cookieValidationKey' => env("VALIDATION_CODE"),
+            'cookieValidationKey' => 'wiypjkrwUa3Nfq3M9LTb1QDbRYhoZgmD',
             'baseUrl' => '',
             'class' => 'klisl\languages\Request'
 
@@ -83,9 +83,9 @@ $config = [
             'class' => 'klisl\languages\UrlManager',
             'rules' => [
 //                '/admin/test' => 'admin/default/index',
+                'languages' => 'languages/default/index', //для модуля мультиязычности
                 '/admin/<action>' => 'admin/default/<action>',
                 '/admin' => 'admin/default/index',
-                'languages' => 'languages/default/index', //для модуля мультиязычности
                 //далее создаем обычные правила
 //                'category/<slug:\w+>' => 'category/view',
                 '<action:(index|about|contact|login|)>' => '/site/<action>',
