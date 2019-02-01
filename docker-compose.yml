@@ -40,3 +40,16 @@ services:
     - '9090:80'
     volumes:
     - /sessions
+
+  postgresql:
+    image: 'postgres'
+    ports:
+      - '6432:5432'
+    container_name: 'yii2-postgresql'
+    environment:
+      POSTGRESQL_USERNAME: yii2shop
+      POSTGRESQL_DATABASE: yii2shop
+      POSTGRESQL_PASSWORD: yii2shop
+    volumes:
+      - ./postgres/data:/VAR/lib/postgresql/data
+      - ./import:/home
