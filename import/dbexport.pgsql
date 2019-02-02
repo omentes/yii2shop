@@ -2188,6 +2188,7 @@ COPY public.tag_type (id, name) FROM stdin;
 --
 
 COPY public."user" (id, phone, email, type_id, password_hash, created_at, auth_key, access_token, updated_at, email_confirm_token, password_reset_token, status, username) FROM stdin;
+1	0500279300	setnemo@gmail.com	\N	$2y$13$rDhcgwBu6d8r9qrUC.69neSLhWE6QH1aeLrqybLQbaP2FJS/.E/Tm	2019-02-02 19:48:41.113			2019-02-02 19:48:53.628			1	admin
 \.
 
 
