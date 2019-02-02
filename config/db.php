@@ -2,13 +2,14 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => env('DB_DSN'),
-    'username' => env('DB_USERNAME'),
-    'password' => env('DB_PASSWORD'),
-    'tablePrefix' => env('DB_TABLE_PREFIX'),
-    'charset' => env('DB_CHARSET', 'utf8'),
-    // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
+    'dsn' => 'pgsql:host=192.168.99.100;port=6432;dbname=postgres',
+    'username' => 'postgres',
+    'password' => '',
+//    'charset' => 'utf8',
+    'schemaMap' => [
+        'pgsql' => [
+            'class' => 'yii\db\pgsql\Schema',
+            'defaultSchema' => 'public' //specify your schema here, public is the default schema
+        ]
+    ], // PostgreSQL
 ];

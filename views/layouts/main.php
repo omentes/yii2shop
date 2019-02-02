@@ -41,7 +41,7 @@ AppAsset::register($this);
             [
                 'label' => 'Dropdown',
                 'items' => [
-                    ['label' => 'Level 1 - Dropdown A', 'url' => '#'],
+                    ['label' =>  Yii::$app->security->generatePasswordHash('admin'), 'url' => '#'],
                     "<li class='divider'></li>",
                     "<li class='dropdown-header'>Dropdown Header</li>",
                     ['label' => 'Level 1 - Dropdown B', 'url' => '#'],

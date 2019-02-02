@@ -1,1 +1,0 @@
-INSERT INTO public.product_category (id, image, canonical, sorted) VALUES (1, null, null, 0);

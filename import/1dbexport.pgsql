@@ -1478,14 +1478,9 @@ CREATE TABLE public."user" (
     email character varying(255),
     type_id integer,
     password_hash character varying(128),
-    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    created_at timestamp without time zone DEFAULT now(),
     auth_key character varying(128),
-    access_token character varying(128),
-    updated_at timestamp without time zone DEFAULT now() NOT NULL,
-    email_confirm_token character varying(255),
-    password_reset_token character varying(255),
-    status smallint DEFAULT 0,
-    username character varying(255) NOT NULL
+    access_token character varying(128)
 );
 
 
@@ -2187,7 +2182,7 @@ COPY public.tag_type (id, name) FROM stdin;
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."user" (id, phone, email, type_id, password_hash, created_at, auth_key, access_token, updated_at, email_confirm_token, password_reset_token, status, username) FROM stdin;
+COPY public."user" (id, phone, email, type_id, password_hash, created_at, auth_key, access_token) FROM stdin;
 \.
 
 
@@ -2856,13 +2851,6 @@ CREATE UNIQUE INDEX product_to_discount_plan_product_id_discount_plan_id_uindex 
 --
 
 CREATE INDEX tag_type_name_index ON public.tag_type USING btree (name);
-
-
---
--- Name: user_email_username_status_index; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX user_email_username_status_index ON public."user" USING btree (email, username, status);
 
 
 --

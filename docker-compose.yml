@@ -9,38 +9,11 @@ services:
     volumes:
     - ./:/var/www/html/
     links:
-    - mysql
+    - postgresql
     environment:
       ENABLE_ENV_FILE: 1
       ENABLE_LOCALCONF: 0
       API_TOKEN: "<YOUR GITHUB API TOKEN>"
-  mysql:
-    image: mysql:5.7
-    container_name: 'yii2-mysql'
-    restart: 'always'
-    ports:
-    - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: yii2shop
-      MYSQL_DATABASE: yii2shop
-      MYSQL_USER: yii2shop
-      MYSQL_PASSWORD: yii2shop
-    volumes:
-    - ./config/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: 'yii2-phpmyadmin'
-    links:
-    - mysql
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    ports:
-    - '9090:80'
-    volumes:
-    - /sessions
-
   postgresql:
     image: 'postgres'
     ports:
@@ -53,3 +26,9 @@ services:
     volumes:
       - ./postgres/data:/VAR/lib/postgresql/data
       - ./import:/home
+      - ./import/dbexport.pgsql:/docker-entrypoint-initdb.d/postgresql.sql
+
+
+
+
+#      docker-compose exec postgresql pg_dump -U postgres postgres > ./import/1dbexport.pgsql

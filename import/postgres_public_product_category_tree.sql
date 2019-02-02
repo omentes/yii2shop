@@ -1,1 +1,0 @@
-INSERT INTO public.product_category_tree (id, child_id, parent_id, level) VALUES (1, 1, 1, 0);

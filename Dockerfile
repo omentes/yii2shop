@@ -53,6 +53,7 @@ RUN wget https://phar.phpunit.de/phpunit-6.0.phar && \
 RUN wget http://codeception.com/codecept.phar && \
         chmod +x codecept.phar && \
         mv codecept.phar /usr/local/bin/codecept
+RUN docker-php-ext-install pdo_mysql
 
 RUN a2enmod rewrite
 #Update apache2.conf
@@ -71,3 +72,7 @@ RUN  composer install
 
 # Finally copy the working dir to the image's web root
 COPY . /var/www/html
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
