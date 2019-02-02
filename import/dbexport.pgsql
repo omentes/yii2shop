@@ -1873,6 +1873,7 @@ ALTER TABLE ONLY public.user_type_name ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 COPY public.brand (id, image, canonical) FROM stdin;
+1		
 \.
 
 
@@ -1881,6 +1882,7 @@ COPY public.brand (id, image, canonical) FROM stdin;
 --
 
 COPY public.brand_name (id, brand_id, name, lang_id, meta_title, meta_description, meta_keywords, meta_h1, content, country) FROM stdin;
+1	1	first brand	1		\N	\N	\N	\N	\N
 \.
 
 
@@ -1921,6 +1923,7 @@ COPY public.discount_type (id, name, discount_logic_type, how) FROM stdin;
 --
 
 COPY public.lang (id, name) FROM stdin;
+1	en
 \.
 
 
@@ -2002,6 +2005,7 @@ COPY public.payment_name (id, payment_id, lang_id, name) FROM stdin;
 --
 
 COPY public.product (id, brand_id, canonical, image_src, harvest, genetics, height, bloom_start, bloom_end, created_at, product_status_id, quantity, sku, vendor_code, outstock_status_id) FROM stdin;
+1	1						\N	\N	\N	\N	\N			\N
 \.
 
 
@@ -2345,7 +2349,7 @@ SELECT pg_catalog.setval('public.product_discount_id_seq', 1, false);
 -- Name: product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.product_id_seq', 1, false);
+SELECT pg_catalog.setval('public.product_id_seq', 1, true);
 
 
 --
