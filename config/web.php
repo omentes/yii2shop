@@ -84,7 +84,8 @@ $config = [
             'rules' => [
 //                '/admin/test' => 'admin/default/index',
                 'languages' => 'languages/default/index', //для модуля мультиязычности
-                '/admin/<action>' => 'admin/default/<action>',
+                '/admin/' => 'admin/default/index',
+                '/admin/<controller>/<action>' => 'admin/<controller>/<action>',
                 '/admin' => 'admin/default/index',
                 //далее создаем обычные правила
 //                'category/<slug:\w+>' => 'category/view',
