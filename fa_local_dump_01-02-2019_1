@@ -1,0 +1,934 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.13
+-- Dumped by pg_dump version 9.5.13
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: brand; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.brand (
+    id integer NOT NULL,
+    name character varying(200)
+);
+
+
+ALTER TABLE public.brand OWNER TO fa;
+
+--
+-- Name: brand_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.brand_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brand_id_seq OWNER TO fa;
+
+--
+-- Name: brand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.brand_id_seq OWNED BY public.brand.id;
+
+
+--
+-- Name: message; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.message (
+    id integer NOT NULL,
+    text character varying(2000),
+    from_id integer,
+    to_id integer,
+    order_history_id integer,
+    created_at timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.message OWNER TO fa;
+
+--
+-- Name: message_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.message_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.message_id_seq OWNER TO fa;
+
+--
+-- Name: message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.message_id_seq OWNED BY public.message.id;
+
+
+--
+-- Name: order; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public."order" (
+    id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT now(),
+    status_id integer,
+    user_id integer,
+    amount numeric(12,2)
+);
+
+
+ALTER TABLE public."order" OWNER TO fa;
+
+--
+-- Name: order_history; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.order_history (
+    id integer NOT NULL,
+    order_id integer,
+    create_at timestamp without time zone DEFAULT now(),
+    previous_status_id integer,
+    status_id integer,
+    is_message boolean DEFAULT false
+);
+
+
+ALTER TABLE public.order_history OWNER TO fa;
+
+--
+-- Name: order_history_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.order_history_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.order_history_id_seq OWNER TO fa;
+
+--
+-- Name: order_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.order_history_id_seq OWNED BY public.order_history.id;
+
+
+--
+-- Name: order_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.order_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.order_id_seq OWNER TO fa;
+
+--
+-- Name: order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.order_id_seq OWNED BY public."order".id;
+
+
+--
+-- Name: order_status; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.order_status (
+    id integer NOT NULL,
+    system_name character varying(50),
+    display_name character varying(100)
+);
+
+
+ALTER TABLE public.order_status OWNER TO fa;
+
+--
+-- Name: order_status_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.order_status_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.order_status_id_seq OWNER TO fa;
+
+--
+-- Name: order_status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.order_status_id_seq OWNED BY public.order_status.id;
+
+
+--
+-- Name: product; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.product (
+    id integer NOT NULL,
+    name character varying(200),
+    brand_id integer
+);
+
+
+ALTER TABLE public.product OWNER TO fa;
+
+--
+-- Name: TABLE product; Type: COMMENT; Schema: public; Owner: fa
+--
+
+COMMENT ON TABLE public.product IS 'таблица продуктов';
+
+
+--
+-- Name: product_category; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.product_category (
+    id integer NOT NULL,
+    name character varying(50)
+);
+
+
+ALTER TABLE public.product_category OWNER TO fa;
+
+--
+-- Name: product_category_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.product_category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_category_id_seq OWNER TO fa;
+
+--
+-- Name: product_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.product_category_id_seq OWNED BY public.product_category.id;
+
+
+--
+-- Name: product_category_tree; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.product_category_tree (
+    id integer NOT NULL,
+    child_id integer,
+    parent_id integer,
+    level integer
+);
+
+
+ALTER TABLE public.product_category_tree OWNER TO fa;
+
+--
+-- Name: product_category_tree_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.product_category_tree_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_category_tree_id_seq OWNER TO fa;
+
+--
+-- Name: product_category_tree_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.product_category_tree_id_seq OWNED BY public.product_category_tree.id;
+
+
+--
+-- Name: product_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.product_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_id_seq OWNER TO fa;
+
+--
+-- Name: product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.product_id_seq OWNED BY public.product.id;
+
+
+--
+-- Name: product_set; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.product_set (
+    id integer NOT NULL,
+    item_count integer,
+    product_id integer,
+    price numeric(12,2),
+    image_src character varying(1000),
+    name character varying(200)
+);
+
+
+ALTER TABLE public.product_set OWNER TO fa;
+
+--
+-- Name: TABLE product_set; Type: COMMENT; Schema: public; Owner: fa
+--
+
+COMMENT ON TABLE public.product_set IS 'таблица комплектаций';
+
+
+--
+-- Name: product_set_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.product_set_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_set_id_seq OWNER TO fa;
+
+--
+-- Name: product_set_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.product_set_id_seq OWNED BY public.product_set.id;
+
+
+--
+-- Name: product_to_category; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.product_to_category (
+    id integer NOT NULL,
+    product_id integer,
+    category_id integer
+);
+
+
+ALTER TABLE public.product_to_category OWNER TO fa;
+
+--
+-- Name: product_to_category_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.product_to_category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_to_category_id_seq OWNER TO fa;
+
+--
+-- Name: product_to_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.product_to_category_id_seq OWNED BY public.product_to_category.id;
+
+
+--
+-- Name: user; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public."user" (
+    id integer NOT NULL,
+    phone character varying(20),
+    email character varying(100),
+    type_id integer,
+    password_hash character varying(300)
+);
+
+
+ALTER TABLE public."user" OWNER TO fa;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_id_seq OWNER TO fa;
+
+--
+-- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.user_id_seq OWNED BY public."user".id;
+
+
+--
+-- Name: user_type; Type: TABLE; Schema: public; Owner: fa
+--
+
+CREATE TABLE public.user_type (
+    id integer NOT NULL,
+    system_name character varying(50),
+    display_name character varying(100)
+);
+
+
+ALTER TABLE public.user_type OWNER TO fa;
+
+--
+-- Name: user_type_id_seq; Type: SEQUENCE; Schema: public; Owner: fa
+--
+
+CREATE SEQUENCE public.user_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_type_id_seq OWNER TO fa;
+
+--
+-- Name: user_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: fa
+--
+
+ALTER SEQUENCE public.user_type_id_seq OWNED BY public.user_type.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.brand ALTER COLUMN id SET DEFAULT nextval('public.brand_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.message ALTER COLUMN id SET DEFAULT nextval('public.message_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public."order" ALTER COLUMN id SET DEFAULT nextval('public.order_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.order_history ALTER COLUMN id SET DEFAULT nextval('public.order_history_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.order_status ALTER COLUMN id SET DEFAULT nextval('public.order_status_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product ALTER COLUMN id SET DEFAULT nextval('public.product_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_category ALTER COLUMN id SET DEFAULT nextval('public.product_category_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_category_tree ALTER COLUMN id SET DEFAULT nextval('public.product_category_tree_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_set ALTER COLUMN id SET DEFAULT nextval('public.product_set_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_to_category ALTER COLUMN id SET DEFAULT nextval('public.product_to_category_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.user_type ALTER COLUMN id SET DEFAULT nextval('public.user_type_id_seq'::regclass);
+
+
+--
+-- Data for Name: brand; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: brand_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.brand_id_seq', 1, false);
+
+
+--
+-- Data for Name: message; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.message_id_seq', 1, false);
+
+
+--
+-- Data for Name: order; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Data for Name: order_history; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: order_history_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.order_history_id_seq', 1, false);
+
+
+--
+-- Name: order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.order_id_seq', 1, false);
+
+
+--
+-- Data for Name: order_status; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: order_status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.order_status_id_seq', 1, false);
+
+
+--
+-- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Data for Name: product_category; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+INSERT INTO public.product_category (id, name) VALUES (1, 'root');
+
+
+--
+-- Name: product_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.product_category_id_seq', 1, true);
+
+
+--
+-- Data for Name: product_category_tree; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+INSERT INTO public.product_category_tree (id, child_id, parent_id, level) VALUES (1, 1, 1, 0);
+
+
+--
+-- Name: product_category_tree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.product_category_tree_id_seq', 1, true);
+
+
+--
+-- Name: product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.product_id_seq', 1, false);
+
+
+--
+-- Data for Name: product_set; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: product_set_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.product_set_id_seq', 1, false);
+
+
+--
+-- Data for Name: product_to_category; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: product_to_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.product_to_category_id_seq', 3, true);
+
+
+--
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.user_id_seq', 1, false);
+
+
+--
+-- Data for Name: user_type; Type: TABLE DATA; Schema: public; Owner: fa
+--
+
+
+
+--
+-- Name: user_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: fa
+--
+
+SELECT pg_catalog.setval('public.user_type_id_seq', 1, false);
+
+
+--
+-- Name: brand_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.brand
+    ADD CONSTRAINT brand_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: message_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.message
+    ADD CONSTRAINT message_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_history_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.order_history
+    ADD CONSTRAINT order_history_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public."order"
+    ADD CONSTRAINT order_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_status_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.order_status
+    ADD CONSTRAINT order_status_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_category_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_category
+    ADD CONSTRAINT product_category_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_category_tree_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_category_tree
+    ADD CONSTRAINT product_category_tree_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_set_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_set
+    ADD CONSTRAINT product_set_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_to_category_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_to_category
+    ADD CONSTRAINT product_to_category_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_to_category_product_id_category_id_pk; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_to_category
+    ADD CONSTRAINT product_to_category_product_id_category_id_pk UNIQUE (product_id, category_id);
+
+
+--
+-- Name: user_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_type_pkey; Type: CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.user_type
+    ADD CONSTRAINT user_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: message_order_history_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.message
+    ADD CONSTRAINT message_order_history_id_fk FOREIGN KEY (order_history_id) REFERENCES public.order_history(id);
+
+
+--
+-- Name: message_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.message
+    ADD CONSTRAINT message_user_id_fk FOREIGN KEY (from_id) REFERENCES public."user"(id);
+
+
+--
+-- Name: message_user_id_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.message
+    ADD CONSTRAINT message_user_id_fk_2 FOREIGN KEY (to_id) REFERENCES public."user"(id);
+
+
+--
+-- Name: order_history_order_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.order_history
+    ADD CONSTRAINT order_history_order_id_fk FOREIGN KEY (order_id) REFERENCES public."order"(id);
+
+
+--
+-- Name: order_history_order_status_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.order_history
+    ADD CONSTRAINT order_history_order_status_id_fk FOREIGN KEY (previous_status_id) REFERENCES public.order_status(id);
+
+
+--
+-- Name: order_history_order_status_id_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.order_history
+    ADD CONSTRAINT order_history_order_status_id_fk_2 FOREIGN KEY (status_id) REFERENCES public.order_status(id);
+
+
+--
+-- Name: order_order_status_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public."order"
+    ADD CONSTRAINT order_order_status_id_fk FOREIGN KEY (status_id) REFERENCES public.order_status(id);
+
+
+--
+-- Name: order_user_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public."order"
+    ADD CONSTRAINT order_user_id_fk FOREIGN KEY (user_id) REFERENCES public."user"(id);
+
+
+--
+-- Name: product_brand_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_brand_id_fk FOREIGN KEY (brand_id) REFERENCES public.brand(id);
+
+
+--
+-- Name: product_category_tree_product_category_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_category_tree
+    ADD CONSTRAINT product_category_tree_product_category_id_fk FOREIGN KEY (child_id) REFERENCES public.product_category(id);
+
+
+--
+-- Name: product_category_tree_product_category_id_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_category_tree
+    ADD CONSTRAINT product_category_tree_product_category_id_fk_2 FOREIGN KEY (parent_id) REFERENCES public.product_category(id);
+
+
+--
+-- Name: product_set_product_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_set
+    ADD CONSTRAINT product_set_product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
+
+
+--
+-- Name: product_to_category_product_category_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_to_category
+    ADD CONSTRAINT product_to_category_product_category_id_fk FOREIGN KEY (category_id) REFERENCES public.product_category(id);
+
+
+--
+-- Name: product_to_category_product_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public.product_to_category
+    ADD CONSTRAINT product_to_category_product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id);
+
+
+--
+-- Name: user_user_type_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: fa
+--
+
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT user_user_type_id_fk FOREIGN KEY (type_id) REFERENCES public.user_type(id);
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
