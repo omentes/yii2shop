@@ -33,8 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'harvest',
             'genetics',
             'height',
-            'bloom_start',
-            'bloom_end',
+
+//            'bloom_start',
+//            'bloom_end',
 //            'created_at',
 //            'product_status_id',
 //            'quantity',
