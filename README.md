@@ -12,6 +12,10 @@
   
 <!-- /BADGES -->
    
+   
+   
+   
+   
 This is Yii2 start application template.
 
 It was created and developing as a fast start for building an advanced sites based on Yii2. 
