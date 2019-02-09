@@ -8,7 +8,7 @@
 [![Build Status](https://travis-ci.org/yii2-starter-kit/yii2-starter-kit.svg?branch=master)](https://travis-ci.org/yii2-starter-kit/yii2-starter-kit)
 
 <!-- /BADGES -->
-
+   
 This is Yii2 start application template.
 
 It was created and developing as a fast start for building an advanced sites based on Yii2. 
@@ -17,6 +17,8 @@ It covers typical use cases for a new project and will help you not to waste you
 
 ## Before you start
 Please, consider helping project via [contributions](https://github.com/yii2-starter-kit/yii2-starter-kit/issues) or [donations](#donations). 
+
+
 
 ## TABLE OF CONTENTS
 - [Demo](#demo)
