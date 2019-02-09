@@ -39,8 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'product_status_id',
             'quantity',
             'sku',
-            'vendor_code',
-            'outstock_status_id',
+//            'vendor_code',
+//            'outstock_status_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
