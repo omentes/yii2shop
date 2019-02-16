@@ -30,6 +30,8 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
+                    ['label' => Yii::t('app', 'Админка'), 'options' => ['class' => 'header']],
+                    ['label' => Yii::t('app', 'Товары'), 'icon' => 'table', 'url' => ['/admin/product/index']],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],

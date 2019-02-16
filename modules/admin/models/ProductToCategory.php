@@ -1,27 +1,27 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 
 /**
- * This is the model class for table "product_to_promocode".
+ * This is the model class for table "product_to_category".
  *
  * @property int $id
  * @property int $product_id
- * @property int $promocode_id
+ * @property int $category_id
  *
  * @property Product $product
- * @property Promocode $promocode
+ * @property ProductCategory $category
  */
-class ProductToPromocode extends \yii\db\ActiveRecord
+class ProductToCategory extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'product_to_promocode';
+        return 'product_to_category';
     }
 
     /**
@@ -30,10 +30,11 @@ class ProductToPromocode extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'promocode_id'], 'default', 'value' => null],
-            [['product_id', 'promocode_id'], 'integer'],
+            [['product_id', 'category_id'], 'default', 'value' => null],
+            [['product_id', 'category_id'], 'integer'],
+            [['product_id', 'category_id'], 'unique', 'targetAttribute' => ['product_id', 'category_id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
-            [['promocode_id'], 'exist', 'skipOnError' => true, 'targetClass' => Promocode::className(), 'targetAttribute' => ['promocode_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -45,7 +46,7 @@ class ProductToPromocode extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'product_id' => Yii::t('app', 'Product ID'),
-            'promocode_id' => Yii::t('app', 'Promocode ID'),
+            'category_id' => Yii::t('app', 'Category ID'),
         ];
     }
 
@@ -60,8 +61,8 @@ class ProductToPromocode extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPromocode()
+    public function getCategory()
     {
-        return $this->hasOne(Promocode::className(), ['id' => 'promocode_id']);
+        return $this->hasOne(ProductCategory::className(), ['id' => 'category_id']);
     }
 }

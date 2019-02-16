@@ -1,27 +1,29 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 
 /**
- * This is the model class for table "product_to_discount_plan".
+ * This is the model class for table "product_price".
  *
  * @property int $id
+ * @property int $item_count
  * @property int $product_id
- * @property int $discount_plan_id
+ * @property string $price
+ * @property int $currency_id
  *
- * @property DiscountPlan $discountPlan
+ * @property Currency $currency
  * @property Product $product
  */
-class ProductToDiscountPlan extends \yii\db\ActiveRecord
+class ProductPrice extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'product_to_discount_plan';
+        return 'product_price';
     }
 
     /**
@@ -30,10 +32,10 @@ class ProductToDiscountPlan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'discount_plan_id'], 'default', 'value' => null],
-            [['product_id', 'discount_plan_id'], 'integer'],
-            [['product_id', 'discount_plan_id'], 'unique', 'targetAttribute' => ['product_id', 'discount_plan_id']],
-            [['discount_plan_id'], 'exist', 'skipOnError' => true, 'targetClass' => DiscountPlan::className(), 'targetAttribute' => ['discount_plan_id' => 'id']],
+            [['item_count', 'product_id', 'currency_id'], 'default', 'value' => null],
+            [['item_count', 'product_id', 'currency_id'], 'integer'],
+            [['price'], 'number'],
+            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
@@ -45,17 +47,19 @@ class ProductToDiscountPlan extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'item_count' => Yii::t('app', 'Item Count'),
             'product_id' => Yii::t('app', 'Product ID'),
-            'discount_plan_id' => Yii::t('app', 'Discount Plan ID'),
+            'price' => Yii::t('app', 'Price'),
+            'currency_id' => Yii::t('app', 'Currency ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDiscountPlan()
+    public function getCurrency()
     {
-        return $this->hasOne(DiscountPlan::className(), ['id' => 'discount_plan_id']);
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
 
     /**

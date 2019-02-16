@@ -1,14 +1,14 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 
 /**
- * This is the model class for table "product_name".
+ * This is the model class for table "tag_name".
  *
  * @property int $id
- * @property int $product_id
+ * @property int $tag_id
  * @property string $name
  * @property int $lang_id
  * @property string $meta_title
@@ -18,16 +18,16 @@ use Yii;
  * @property string $content
  *
  * @property Lang $lang
- * @property Product $product
+ * @property Tag $tag
  */
-class ProductName extends \yii\db\ActiveRecord
+class TagName extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'product_name';
+        return 'tag_name';
     }
 
     /**
@@ -36,12 +36,12 @@ class ProductName extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'lang_id'], 'default', 'value' => null],
-            [['product_id', 'lang_id'], 'integer'],
+            [['tag_id', 'lang_id'], 'default', 'value' => null],
+            [['tag_id', 'lang_id'], 'integer'],
             [['content'], 'string'],
             [['name', 'meta_title', 'meta_description', 'meta_keywords', 'meta_h1'], 'string', 'max' => 255],
             [['lang_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lang::className(), 'targetAttribute' => ['lang_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tag::className(), 'targetAttribute' => ['tag_id' => 'id']],
         ];
     }
 
@@ -52,7 +52,7 @@ class ProductName extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'product_id' => Yii::t('app', 'Product ID'),
+            'tag_id' => Yii::t('app', 'Tag ID'),
             'name' => Yii::t('app', 'Name'),
             'lang_id' => Yii::t('app', 'Lang ID'),
             'meta_title' => Yii::t('app', 'Meta Title'),
@@ -74,8 +74,8 @@ class ProductName extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProduct()
+    public function getTag()
     {
-        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+        return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
     }
 }

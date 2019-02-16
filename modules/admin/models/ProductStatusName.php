@@ -1,28 +1,28 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 
 /**
- * This is the model class for table "product_outstock_status_name".
+ * This is the model class for table "product_status_name".
  *
  * @property int $id
- * @property int $product_outstock_status_id
+ * @property int $product_status_id
  * @property int $lang_id
  * @property string $name
  *
  * @property Lang $lang
- * @property ProductOutstockStatus $productOutstockStatus
+ * @property ProductStatus $productStatus
  */
-class ProductOutstockStatusName extends \yii\db\ActiveRecord
+class ProductStatusName extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'product_outstock_status_name';
+        return 'product_status_name';
     }
 
     /**
@@ -31,11 +31,11 @@ class ProductOutstockStatusName extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_outstock_status_id', 'lang_id'], 'default', 'value' => null],
-            [['product_outstock_status_id', 'lang_id'], 'integer'],
+            [['product_status_id', 'lang_id'], 'default', 'value' => null],
+            [['product_status_id', 'lang_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['lang_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lang::className(), 'targetAttribute' => ['lang_id' => 'id']],
-            [['product_outstock_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductOutstockStatus::className(), 'targetAttribute' => ['product_outstock_status_id' => 'id']],
+            [['product_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductStatus::className(), 'targetAttribute' => ['product_status_id' => 'id']],
         ];
     }
 
@@ -46,7 +46,7 @@ class ProductOutstockStatusName extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'product_outstock_status_id' => Yii::t('app', 'Product Outstock Status ID'),
+            'product_status_id' => Yii::t('app', 'Product Status ID'),
             'lang_id' => Yii::t('app', 'Lang ID'),
             'name' => Yii::t('app', 'Name'),
         ];
@@ -63,8 +63,8 @@ class ProductOutstockStatusName extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProductOutstockStatus()
+    public function getProductStatus()
     {
-        return $this->hasOne(ProductOutstockStatus::className(), ['id' => 'product_outstock_status_id']);
+        return $this->hasOne(ProductStatus::className(), ['id' => 'product_status_id']);
     }
 }

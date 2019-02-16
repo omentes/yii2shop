@@ -2,9 +2,9 @@
 
 namespace app\modules\admin\controllers;
 
+use app\modules\admin\models\Product;
+use app\modules\admin\models\ProductSearch;
 use Yii;
-use app\models\Product;
-use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -100,7 +100,9 @@ class ProductController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
