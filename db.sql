@@ -20,16 +20,16 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: brand; Type: TABLE; Schema: public; Owner: postgres
+-- Name: product_brand; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.brand (
+CREATE TABLE public.product_brand (
     id integer NOT NULL,
     image character varying(255)
 );
 
 
-ALTER TABLE public.brand OWNER TO postgres;
+ALTER TABLE public.product_brand OWNER TO postgres;
 
 --
 -- Name: brand_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -49,14 +49,14 @@ ALTER TABLE public.brand_id_seq OWNER TO postgres;
 -- Name: brand_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.brand_id_seq OWNED BY public.brand.id;
+ALTER SEQUENCE public.brand_id_seq OWNED BY public.product_brand.id;
 
 
 --
--- Name: brand_name; Type: TABLE; Schema: public; Owner: postgres
+-- Name: product_brand_name; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.brand_name (
+CREATE TABLE public.product_brand_name (
     id integer NOT NULL,
     brand_id integer,
     name character varying(255) DEFAULT NULL::character varying,
@@ -70,7 +70,7 @@ CREATE TABLE public.brand_name (
 );
 
 
-ALTER TABLE public.brand_name OWNER TO postgres;
+ALTER TABLE public.product_brand_name OWNER TO postgres;
 
 --
 -- Name: brand_name_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -91,7 +91,7 @@ ALTER TABLE public.brand_name_id_seq OWNER TO postgres;
 -- Name: brand_name_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.brand_name_id_seq OWNED BY public.brand_name.id;
+ALTER SEQUENCE public.brand_name_id_seq OWNED BY public.product_brand_name.id;
 
 
 --
@@ -1193,6 +1193,51 @@ ALTER SEQUENCE public.product_status_name_id_seq OWNED BY public.product_status_
 
 
 --
+-- Name: product_tag; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.product_tag (
+    id integer NOT NULL,
+    image character varying(255) DEFAULT NULL::character varying,
+    sorted integer DEFAULT 0,
+    tag_type integer
+);
+
+
+ALTER TABLE public.product_tag OWNER TO postgres;
+
+--
+-- Name: product_tag_name; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.product_tag_name (
+    id integer NOT NULL,
+    tag_id integer,
+    name character varying(255) DEFAULT NULL::character varying,
+    lang_id integer,
+    meta_title character varying(255),
+    meta_description character varying(255),
+    meta_keywords character varying(255),
+    meta_h1 character varying(255),
+    content text
+);
+
+
+ALTER TABLE public.product_tag_name OWNER TO postgres;
+
+--
+-- Name: product_tag_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.product_tag_type (
+    id integer NOT NULL,
+    name character varying(255)
+);
+
+
+ALTER TABLE public.product_tag_type OWNER TO postgres;
+
+--
 -- Name: product_to_category; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1524,20 +1569,6 @@ ALTER SEQUENCE public.shipping_option_name_id_seq OWNED BY public.shipping_optio
 
 
 --
--- Name: tag; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tag (
-    id integer NOT NULL,
-    image character varying(255) DEFAULT NULL::character varying,
-    sorted integer DEFAULT 0,
-    tag_type integer
-);
-
-
-ALTER TABLE public.tag OWNER TO postgres;
-
---
 -- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1556,27 +1587,8 @@ ALTER TABLE public.tag_id_seq OWNER TO postgres;
 -- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.tag_id_seq OWNED BY public.tag.id;
+ALTER SEQUENCE public.tag_id_seq OWNED BY public.product_tag.id;
 
-
---
--- Name: tag_name; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tag_name (
-    id integer NOT NULL,
-    tag_id integer,
-    name character varying(255) DEFAULT NULL::character varying,
-    lang_id integer,
-    meta_title character varying(255),
-    meta_description character varying(255),
-    meta_keywords character varying(255),
-    meta_h1 character varying(255),
-    content text
-);
-
-
-ALTER TABLE public.tag_name OWNER TO postgres;
 
 --
 -- Name: tag_name_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -1597,20 +1609,8 @@ ALTER TABLE public.tag_name_id_seq OWNER TO postgres;
 -- Name: tag_name_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.tag_name_id_seq OWNED BY public.tag_name.id;
+ALTER SEQUENCE public.tag_name_id_seq OWNED BY public.product_tag_name.id;
 
-
---
--- Name: tag_type; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tag_type (
-    id integer NOT NULL,
-    name character varying(255)
-);
-
-
-ALTER TABLE public.tag_type OWNER TO postgres;
 
 --
 -- Name: tag_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -1631,7 +1631,7 @@ ALTER TABLE public.tag_type_id_seq OWNER TO postgres;
 -- Name: tag_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.tag_type_id_seq OWNED BY public.tag_type.id;
+ALTER SEQUENCE public.tag_type_id_seq OWNED BY public.product_tag_type.id;
 
 
 --
@@ -1748,20 +1748,6 @@ ALTER SEQUENCE public.user_type_id_seq OWNED BY public.user_type.id;
 
 
 --
--- Name: brand id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.brand ALTER COLUMN id SET DEFAULT nextval('public.brand_id_seq'::regclass);
-
-
---
--- Name: brand_name id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.brand_name ALTER COLUMN id SET DEFAULT nextval('public.brand_name_id_seq'::regclass);
-
-
---
 -- Name: currency id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1857,6 +1843,20 @@ ALTER TABLE ONLY public.payment_name ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.product ALTER COLUMN id SET DEFAULT nextval('public.product_id_seq'::regclass);
+
+
+--
+-- Name: product_brand id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_brand ALTER COLUMN id SET DEFAULT nextval('public.brand_id_seq'::regclass);
+
+
+--
+-- Name: product_brand_name id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_brand_name ALTER COLUMN id SET DEFAULT nextval('public.brand_name_id_seq'::regclass);
 
 
 --
@@ -1958,6 +1958,27 @@ ALTER TABLE ONLY public.product_status_name ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
+-- Name: product_tag id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_tag ALTER COLUMN id SET DEFAULT nextval('public.tag_id_seq'::regclass);
+
+
+--
+-- Name: product_tag_name id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_tag_name ALTER COLUMN id SET DEFAULT nextval('public.tag_name_id_seq'::regclass);
+
+
+--
+-- Name: product_tag_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_tag_type ALTER COLUMN id SET DEFAULT nextval('public.tag_type_id_seq'::regclass);
+
+
+--
 -- Name: product_to_category id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2028,27 +2049,6 @@ ALTER TABLE ONLY public.shipping_option_name ALTER COLUMN id SET DEFAULT nextval
 
 
 --
--- Name: tag id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tag ALTER COLUMN id SET DEFAULT nextval('public.tag_id_seq'::regclass);
-
-
---
--- Name: tag_name id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tag_name ALTER COLUMN id SET DEFAULT nextval('public.tag_name_id_seq'::regclass);
-
-
---
--- Name: tag_type id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tag_type ALTER COLUMN id SET DEFAULT nextval('public.tag_type_id_seq'::regclass);
-
-
---
 -- Name: user id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2067,24 +2067,6 @@ ALTER TABLE ONLY public.user_type ALTER COLUMN id SET DEFAULT nextval('public.us
 --
 
 ALTER TABLE ONLY public.user_type_name ALTER COLUMN id SET DEFAULT nextval('public.user_tape_name_id_seq'::regclass);
-
-
---
--- Data for Name: brand; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.brand (id, image) FROM stdin;
-1	
-\.
-
-
---
--- Data for Name: brand_name; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.brand_name (id, brand_id, name, lang_id, meta_title, meta_description, meta_keywords, meta_h1, content, country) FROM stdin;
-1	1	first brand	1		\N	\N	\N	\N	\N
-\.
 
 
 --
@@ -2211,6 +2193,24 @@ COPY public.product (id, brand_id, image_src, created_at, product_status_id, qua
 
 
 --
+-- Data for Name: product_brand; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product_brand (id, image) FROM stdin;
+1	
+\.
+
+
+--
+-- Data for Name: product_brand_name; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product_brand_name (id, brand_id, name, lang_id, meta_title, meta_description, meta_keywords, meta_h1, content, country) FROM stdin;
+1	1	first brand	1		\N	\N	\N	\N	\N
+\.
+
+
+--
 -- Data for Name: product_category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2325,6 +2325,30 @@ COPY public.product_status_name (id, product_status_id, lang_id, name) FROM stdi
 
 
 --
+-- Data for Name: product_tag; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product_tag (id, image, sorted, tag_type) FROM stdin;
+\.
+
+
+--
+-- Data for Name: product_tag_name; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product_tag_name (id, tag_id, name, lang_id, meta_title, meta_description, meta_keywords, meta_h1, content) FROM stdin;
+\.
+
+
+--
+-- Data for Name: product_tag_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product_tag_type (id, name) FROM stdin;
+\.
+
+
+--
 -- Data for Name: product_to_category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2401,30 +2425,6 @@ COPY public.shipping_option (id, shipping_id, shipping_option) FROM stdin;
 --
 
 COPY public.shipping_option_name (id, shipping_option_id, lang_id, name) FROM stdin;
-\.
-
-
---
--- Data for Name: tag; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tag (id, image, sorted, tag_type) FROM stdin;
-\.
-
-
---
--- Data for Name: tag_name; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tag_name (id, tag_id, name, lang_id, meta_title, meta_description, meta_keywords, meta_h1, content) FROM stdin;
-\.
-
-
---
--- Data for Name: tag_type; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tag_type (id, name) FROM stdin;
 \.
 
 
@@ -2776,18 +2776,18 @@ SELECT pg_catalog.setval('public.user_type_id_seq', 1, false);
 
 
 --
--- Name: brand_name brand_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: product_brand_name brand_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.brand_name
+ALTER TABLE ONLY public.product_brand_name
     ADD CONSTRAINT brand_name_pkey PRIMARY KEY (id);
 
 
 --
--- Name: brand brand_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: product_brand brand_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.brand
+ALTER TABLE ONLY public.product_brand
     ADD CONSTRAINT brand_pkey PRIMARY KEY (id);
 
 
@@ -3104,26 +3104,26 @@ ALTER TABLE ONLY public.shipping
 
 
 --
--- Name: tag_name tag_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: product_tag_name tag_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.tag_name
+ALTER TABLE ONLY public.product_tag_name
     ADD CONSTRAINT tag_name_pkey PRIMARY KEY (id);
 
 
 --
--- Name: tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: product_tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.tag
+ALTER TABLE ONLY public.product_tag
     ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
 
 
 --
--- Name: tag_type tag_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: product_tag_type tag_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.tag_type
+ALTER TABLE ONLY public.product_tag_type
     ADD CONSTRAINT tag_type_pkey PRIMARY KEY (id);
 
 
@@ -3211,7 +3211,7 @@ CREATE UNIQUE INDEX product_to_option_id_uindex ON public.product_to_option USIN
 -- Name: tag_type_name_index; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX tag_type_name_index ON public.tag_type USING btree (name);
+CREATE INDEX tag_type_name_index ON public.product_tag_type USING btree (name);
 
 
 --
@@ -3219,22 +3219,6 @@ CREATE INDEX tag_type_name_index ON public.tag_type USING btree (name);
 --
 
 CREATE INDEX user_email_username_status_index ON public."user" USING btree (email, username, status);
-
-
---
--- Name: brand_name brand_name_brand_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.brand_name
-    ADD CONSTRAINT brand_name_brand_id_fk FOREIGN KEY (brand_id) REFERENCES public.brand(id);
-
-
---
--- Name: brand_name brand_name_lang_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.brand_name
-    ADD CONSTRAINT brand_name_lang_id_fk FOREIGN KEY (lang_id) REFERENCES public.lang(id);
 
 
 --
@@ -3410,7 +3394,23 @@ ALTER TABLE ONLY public.payment_name
 --
 
 ALTER TABLE ONLY public.product
-    ADD CONSTRAINT product_brand_id_fk FOREIGN KEY (brand_id) REFERENCES public.brand(id);
+    ADD CONSTRAINT product_brand_id_fk FOREIGN KEY (brand_id) REFERENCES public.product_brand(id);
+
+
+--
+-- Name: product_brand_name product_brand_name_brand_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_brand_name
+    ADD CONSTRAINT product_brand_name_brand_id_fk FOREIGN KEY (brand_id) REFERENCES public.product_brand(id);
+
+
+--
+-- Name: product_brand_name product_brand_name_lang_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_brand_name
+    ADD CONSTRAINT product_brand_name_lang_id_fk FOREIGN KEY (lang_id) REFERENCES public.lang(id);
 
 
 --
@@ -3590,6 +3590,30 @@ ALTER TABLE ONLY public.product_status_name
 
 
 --
+-- Name: product_tag_name product_tag_name_lang_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_tag_name
+    ADD CONSTRAINT product_tag_name_lang_id_fk FOREIGN KEY (lang_id) REFERENCES public.lang(id);
+
+
+--
+-- Name: product_tag_name product_tag_name_tag_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_tag_name
+    ADD CONSTRAINT product_tag_name_tag_id_fk FOREIGN KEY (tag_id) REFERENCES public.product_tag(id);
+
+
+--
+-- Name: product_tag product_tag_tag_type_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_tag
+    ADD CONSTRAINT product_tag_tag_type_id_fk FOREIGN KEY (tag_type) REFERENCES public.product_tag_type(id);
+
+
+--
 -- Name: product_to_category product_to_category_product_category_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3650,7 +3674,7 @@ ALTER TABLE ONLY public.product_to_tag
 --
 
 ALTER TABLE ONLY public.product_to_tag
-    ADD CONSTRAINT product_to_tag_tag_id_fk FOREIGN KEY (tag_id) REFERENCES public.tag(id);
+    ADD CONSTRAINT product_to_tag_tag_id_fk FOREIGN KEY (tag_id) REFERENCES public.product_tag(id);
 
 
 --
@@ -3699,30 +3723,6 @@ ALTER TABLE ONLY public.shipping_option_name
 
 ALTER TABLE ONLY public.shipping_option
     ADD CONSTRAINT shipping_options_shipping_id_fk FOREIGN KEY (shipping_id) REFERENCES public.shipping(id);
-
-
---
--- Name: tag_name tag_name_lang_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tag_name
-    ADD CONSTRAINT tag_name_lang_id_fk FOREIGN KEY (lang_id) REFERENCES public.lang(id);
-
-
---
--- Name: tag_name tag_name_tag_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tag_name
-    ADD CONSTRAINT tag_name_tag_id_fk FOREIGN KEY (tag_id) REFERENCES public.tag(id);
-
-
---
--- Name: tag tag_tag_type_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tag
-    ADD CONSTRAINT tag_tag_type_id_fk FOREIGN KEY (tag_type) REFERENCES public.tag_type(id);
 
 
 --
