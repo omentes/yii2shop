@@ -29,6 +29,12 @@ services:
       - ./import/dbexport.pgsql:/docker-entrypoint-initdb.d/postgresql.sql
 
 
-
-
+#
+#
+#
 #      docker-compose exec postgresql pg_dump -U postgres postgres > ./import/1dbexport.pgsql
+#      docker-compose exec postgresql pg_dump -U postgres -w --dbname postgres > db.sql #import
+#      docker-compose exec postgresql psql -U postgres -w -d postgres -f db.sql # export
+#
+#
+#

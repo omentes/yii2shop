@@ -72,9 +72,6 @@
     - add change info
     - add favorites
 - add currency
-- add db structure for user
-- add db structure for category
-- add db structure for product
 - add canonical tag
 - add hreflang tag
 
@@ -84,5 +81,4 @@
 - add .htaccess at home and web directory, add to web.php url rules (0.5)
 - add AdminLTE Module (6)
 - add language Module yii2-languages (2)
-
-
+- add db structure (12+7) https://postgrespro.ru/docs/postgresql/9.6/app-pgdump

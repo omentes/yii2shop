@@ -9,3 +9,10 @@ grant all privileges on database dbname to user;
 exit;
 cd /home
 psql -U user dbname < import.sql # from import dir
+
+
+
+
+
+docker-compose exec postgresql pg_dump -U postgres -w --dbname postgres > db.sql #import
+docker-compose exec postgresql psql -U postgres -w -d postgres -f db.sql # export
