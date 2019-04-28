@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\order;
 
+use app\modules\admin\models\shipping\ShippingOption;
 use Yii;
 
 /**

@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\models\product\brand;
+namespace app\modules\admin\models\product\tag;
 
 use app\modules\admin\models\Lang;
 use Yii;
 
 /**
- * This is the model class for table "product_brand_name".
+ * This is the model class for table "product_tag_name".
  *
  * @property int $id
- * @property int $brand_id
+ * @property int $tag_id
  * @property string $name
  * @property int $lang_id
  * @property string $meta_title
@@ -17,19 +17,18 @@ use Yii;
  * @property string $meta_keywords
  * @property string $meta_h1
  * @property string $content
- * @property string $country
  *
  * @property Lang $lang
- * @property ProductBrand $brand
+ * @property ProductTag $tag
  */
-class ProductBrandName extends \yii\db\ActiveRecord
+class ProductTagName extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'product_brand_name';
+        return 'product_tag_name';
     }
 
     /**
@@ -38,12 +37,12 @@ class ProductBrandName extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['brand_id', 'lang_id'], 'default', 'value' => null],
-            [['brand_id', 'lang_id'], 'integer'],
+            [['tag_id', 'lang_id'], 'default', 'value' => null],
+            [['tag_id', 'lang_id'], 'integer'],
             [['content'], 'string'],
-            [['name', 'meta_title', 'meta_description', 'meta_keywords', 'meta_h1', 'country'], 'string', 'max' => 255],
+            [['name', 'meta_title', 'meta_description', 'meta_keywords', 'meta_h1'], 'string', 'max' => 255],
             [['lang_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lang::className(), 'targetAttribute' => ['lang_id' => 'id']],
-            [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductBrand::className(), 'targetAttribute' => ['brand_id' => 'id']],
+            [['tag_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductTag::className(), 'targetAttribute' => ['tag_id' => 'id']],
         ];
     }
 
@@ -54,7 +53,7 @@ class ProductBrandName extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'brand_id' => Yii::t('app', 'Brand ID'),
+            'tag_id' => Yii::t('app', 'Tag ID'),
             'name' => Yii::t('app', 'Name'),
             'lang_id' => Yii::t('app', 'Lang ID'),
             'meta_title' => Yii::t('app', 'Meta Title'),
@@ -62,7 +61,6 @@ class ProductBrandName extends \yii\db\ActiveRecord
             'meta_keywords' => Yii::t('app', 'Meta Keywords'),
             'meta_h1' => Yii::t('app', 'Meta H1'),
             'content' => Yii::t('app', 'Content'),
-            'country' => Yii::t('app', 'Country'),
         ];
     }
 
@@ -77,8 +75,8 @@ class ProductBrandName extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBrand()
+    public function getTag()
     {
-        return $this->hasOne(ProductBrand::className(), ['id' => 'brand_id']);
+        return $this->hasOne(ProductTag::className(), ['id' => 'tag_id']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\payment;
 
+use app\modules\admin\models\order\Order;
 use Yii;
 
 /**

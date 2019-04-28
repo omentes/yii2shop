@@ -2,6 +2,12 @@
 
 namespace app\modules\admin\models\product;
 
+use app\modules\admin\models\discount\DiscountPlan;
+use app\modules\admin\models\order\OrderToProduct;
+use app\modules\admin\models\product\brand\ProductBrand;
+use app\modules\admin\models\product\category\ProductCategory;
+use app\modules\admin\models\product\status\ProductOutstockStatus;
+use app\modules\admin\models\product\status\ProductStatus;
 use Yii;
 
 /**

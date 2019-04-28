@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\product\tag;
 
+use app\modules\admin\models\product\ProductToTag;
 use Yii;
 
 /**

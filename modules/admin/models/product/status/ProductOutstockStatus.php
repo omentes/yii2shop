@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\product\status;
 
+use app\modules\admin\models\product\Product;
 use Yii;
 
 /**

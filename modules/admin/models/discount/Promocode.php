@@ -1,7 +1,8 @@
 <?php
 
-namespace app\modules\admin\models;
+namespace app\modules\admin\models\discount;
 
+use app\modules\admin\models\product\ProductToPromocode;
 use Yii;
 
 /**

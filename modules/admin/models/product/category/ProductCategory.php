@@ -2,6 +2,8 @@
 
 namespace app\modules\admin\models\product\category;
 
+use app\modules\admin\models\product\Product;
+use app\modules\admin\models\product\ProductToCategory;
 use Yii;
 
 /**

@@ -2,6 +2,8 @@
 
 namespace app\modules\admin\models\discount;
 
+use app\modules\admin\models\product\Product;
+use app\modules\admin\models\product\ProductToDiscountPlan;
 use Yii;
 
 /**

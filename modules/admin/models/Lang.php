@@ -2,6 +2,19 @@
 
 namespace app\modules\admin\models;
 
+use app\models\user\UserTypeName;
+use app\modules\admin\models\order\OrderStatusName;
+use app\modules\admin\models\payment\PaymentName;
+use app\modules\admin\models\product\brand\ProductBrandName;
+use app\modules\admin\models\product\category\ProductCategoryName;
+use app\modules\admin\models\product\option\ProductOptionGroupName;
+use app\modules\admin\models\product\option\ProductOptionName;
+use app\modules\admin\models\product\ProductName;
+use app\modules\admin\models\product\status\ProductOutstockStatusName;
+use app\modules\admin\models\product\status\ProductStatusName;
+use app\modules\admin\models\product\tag\ProductTagName;
+use app\modules\admin\models\shipping\ShippingName;
+use app\modules\admin\models\shipping\ShippingOptionName;
 use Yii;
 
 /**

@@ -2,6 +2,9 @@
 
 namespace app\modules\admin\models\order;
 
+use app\models\user\User;
+use app\modules\admin\models\payment\Payment;
+use app\modules\admin\models\shipping\Shipping;
 use Yii;
 
 /**

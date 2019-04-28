@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\product\category;
 
+use app\modules\admin\models\Lang;
 use Yii;
 
 /**

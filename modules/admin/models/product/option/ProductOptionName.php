@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\product\option;
 
+use app\modules\admin\models\Lang;
 use Yii;
 
 /**

@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models;
 
+use app\modules\admin\models\product\ProductPrice;
 use Yii;
 
 /**

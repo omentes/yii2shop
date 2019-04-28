@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\product;
 
+use app\modules\admin\models\Currency;
 use Yii;
 
 /**

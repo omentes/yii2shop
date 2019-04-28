@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\discount;
 
+use app\modules\admin\models\Promocode;
 use Yii;
 
 /**

@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\models\product;
 
+use phpDocumentor\Reflection\DocBlock\Tag;
 use Yii;
 
 /**
