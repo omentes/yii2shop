@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use Yii;
 use yii\base\Model;
+use \yii\db\Expression;
 use yii\data\ActiveDataProvider;
 use app\modules\admin\models\product\category\ProductCategory;
 
@@ -74,13 +75,9 @@ class ProductCategorySearch extends ProductCategory
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'sorted' => $this->sorted,
-        ]);
-
-        $expName = new \yii\db\Expression('(current.name::text)');
-        $expParent = new \yii\db\Expression('(parent_table.name::text)');
-        $expSorted = new \yii\db\Expression('(sorted::text)');
+        $expName = new Expression('(current.name::text)');
+        $expParent = new Expression('(parent_table.name::text)');
+        $expSorted = new Expression('(sorted::text)');
         $query->andFilterWhere(['ilike', $expName, $this->name])
             ->andFilterWhere(['ilike', $expParent, $this->parent])
             ->andFilterWhere(['ilike', $expSorted, $this->sorted])
