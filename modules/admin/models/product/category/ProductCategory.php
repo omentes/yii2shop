@@ -12,15 +12,18 @@ use Yii;
  * @property int $id
  * @property string $image
  * @property int $sorted
+ * @property int $parent_id
  *
  * @property ProductCategoryName[] $productCategoryNames
- * @property ProductCategoryTree[] $productCategoryTrees
- * @property ProductCategoryTree[] $productCategoryTrees0
  * @property ProductToCategory[] $productToCategories
  * @property Product[] $products
  */
 class ProductCategory extends \yii\db\ActiveRecord
 {
+    public $name;
+    public $lang;
+    public $parent;
+
     /**
      * {@inheritdoc}
      */
@@ -35,9 +38,10 @@ class ProductCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sorted'], 'default', 'value' => null],
-            [['sorted'], 'integer'],
-            [['image'], 'string', 'max' => 255],
+            [['sorted', 'parent_id'], 'default', 'value' => null],
+            [['sorted', 'parent_id'], 'integer'],
+            [['name', 'parent'], 'safe'],
+            [['image', 'name', 'parent'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,6 +54,8 @@ class ProductCategory extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'image' => Yii::t('app', 'Image'),
             'sorted' => Yii::t('app', 'Sorted'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
+            'name' => Yii::t('app', 'Name'),
         ];
     }
 
@@ -59,22 +65,6 @@ class ProductCategory extends \yii\db\ActiveRecord
     public function getProductCategoryNames()
     {
         return $this->hasMany(ProductCategoryName::className(), ['product_category_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductCategoryTrees()
-    {
-        return $this->hasMany(ProductCategoryTree::className(), ['child_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductCategoryTrees0()
-    {
-        return $this->hasMany(ProductCategoryTree::className(), ['parent_id' => 'id']);
     }
 
     /**

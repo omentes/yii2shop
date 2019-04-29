@@ -668,8 +668,7 @@ COMMENT ON TABLE public.product IS 'таблица продуктов';
 CREATE TABLE public.product_category (
     id integer NOT NULL,
     image character varying(255),
-    sorted integer DEFAULT 0,
-    parent_id integer DEFAULT 0
+    sorted integer DEFAULT 0
 );
 
 
@@ -694,6 +693,41 @@ ALTER TABLE public.product_category_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.product_category_id_seq OWNED BY public.product_category.id;
+
+
+--
+-- Name: product_category_tree; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.product_category_tree (
+    id integer NOT NULL,
+    child_id integer,
+    parent_id integer,
+    level integer
+);
+
+
+ALTER TABLE public.product_category_tree OWNER TO postgres;
+
+--
+-- Name: product_category_tree_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.product_category_tree_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_category_tree_id_seq OWNER TO postgres;
+
+--
+-- Name: product_category_tree_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.product_category_tree_id_seq OWNED BY public.product_category_tree.id;
 
 
 --
@@ -1840,6 +1874,13 @@ ALTER TABLE ONLY public.product_category_name ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: product_category_tree id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_category_tree ALTER COLUMN id SET DEFAULT nextval('public.product_category_tree_id_seq'::regclass);
+
+
+--
 -- Name: product_name id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -2065,9 +2106,7 @@ COPY public.discount_type (id, name, discount_logic_type, how) FROM stdin;
 --
 
 COPY public.lang (id, name) FROM stdin;
-3	uk
-2	en
-1	ru
+1	en
 \.
 
 
@@ -2175,13 +2214,8 @@ COPY public.product_brand_name (id, brand_id, name, lang_id, meta_title, meta_de
 -- Data for Name: product_category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.product_category (id, image, sorted, parent_id) FROM stdin;
-2	\N	1	1
-3	\N	2	1
-4	\N	1	0
-5	\N	0	4
-6	\N	1	4
-1	\N	0	0
+COPY public.product_category (id, image, sorted) FROM stdin;
+1	\N	0
 \.
 
 
@@ -2190,12 +2224,15 @@ COPY public.product_category (id, image, sorted, parent_id) FROM stdin;
 --
 
 COPY public.product_category_name (id, product_category_id, name, lang_id, meta_title, meta_description, meta_keywords, meta_h1, content) FROM stdin;
-1	1	Категория1	1	Тайтл Категория1	Дескрипшин Категория1	ключи,Категория1	Загаловок Н1 Категория1	тут будет контент
-3	3	Категория3	1	Тайтл Категория3	Дескрипшин Категория3	ключи,Категория3	Загаловок Н1 Категория3	тут будет контент
-4	4	Категория4	1	Тайтл Категория4	Дескрипшин Категория4	ключи,Категория4	Загаловок Н1 Категория4	тут будет контент
-2	2	Категория2	1	Тайтл Категория2	Дескрипшин Категория2	ключи,Категория2	Загаловок Н1 Категория2	тут будет контент
-6	6	Категория6	1	Тайтл Категория6	Дескрипшин Категория6	ключи,Категория6	Загаловок Н1 Категория6	тут будет контент
-5	5	Категория5	1	Тайтл Категория5	Дескрипшин Категория5	ключи,Категория5	Загаловок Н1 Категория5	тут будет контент
+\.
+
+
+--
+-- Data for Name: product_category_tree; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product_category_tree (id, child_id, parent_id, level) FROM stdin;
+1	1	1	0
 \.
 
 
@@ -2536,6 +2573,13 @@ SELECT pg_catalog.setval('public.product_category_id_seq', 1, true);
 
 
 --
+-- Name: product_category_tree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.product_category_tree_id_seq', 1, true);
+
+
+--
 -- Name: product_discount_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2868,6 +2912,14 @@ ALTER TABLE ONLY public.product_category
 
 
 --
+-- Name: product_category_tree product_category_tree_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_category_tree
+    ADD CONSTRAINT product_category_tree_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: product_to_discount_plan product_discount_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3111,13 +3163,6 @@ CREATE UNIQUE INDEX currency_code_uindex ON public.currency USING btree (code);
 --
 
 CREATE UNIQUE INDEX currency_name_uindex ON public.currency USING btree (name);
-
-
---
--- Name: lang_name_index; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX lang_name_index ON public.lang USING btree (name);
 
 
 --
@@ -3374,6 +3419,22 @@ ALTER TABLE ONLY public.product_brand_name
 
 ALTER TABLE ONLY public.product_category_name
     ADD CONSTRAINT product_category_name_lang_id_fk FOREIGN KEY (lang_id) REFERENCES public.lang(id);
+
+
+--
+-- Name: product_category_tree product_category_tree_product_category_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_category_tree
+    ADD CONSTRAINT product_category_tree_product_category_id_fk FOREIGN KEY (child_id) REFERENCES public.product_category(id);
+
+
+--
+-- Name: product_category_tree product_category_tree_product_category_id_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product_category_tree
+    ADD CONSTRAINT product_category_tree_product_category_id_fk_2 FOREIGN KEY (parent_id) REFERENCES public.product_category(id);
 
 
 --

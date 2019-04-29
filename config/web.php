@@ -85,8 +85,8 @@ $config = [
 //                '/admin/test' => 'admin/default/index',
                 'languages' => 'languages/default/index', //для модуля мультиязычности
                 '/admin/' => 'admin/default/index',
-                '/admin/<controller>/<action>' => 'admin/<controller>/<action>',
                 '/admin' => 'admin/default/index',
+                '/admin/<controller>/<action>' => 'admin/<controller>/<action>',
                 //далее создаем обычные правила
 //                'category/<slug:\w+>' => 'category/view',
                 '<action:(index|about|contact|login|)>' => '/site/<action>',
@@ -103,7 +103,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';

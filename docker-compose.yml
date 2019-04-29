@@ -26,7 +26,7 @@ services:
     volumes:
       - ./postgres/data:/VAR/lib/postgresql/data
       - ./import:/home
-      - ./import/dbexport.pgsql:/docker-entrypoint-initdb.d/postgresql.sql
+      - ./import/db.sql:/docker-entrypoint-initdb.d/postgresql.sql
 
 
 #
