@@ -45,11 +45,11 @@ class ProductCategorySearch extends ProductCategory
             ->select([
                 'product_category.*',
                 'current.name',
-                'parent.name as parent',
+                'parent_table.name as parent',
                 'lang.name AS lang',
                 ])
             ->innerJoin('product_category_name AS current', 'current.product_category_id = product_category.id')
-            ->leftJoin('product_category_name AS parent', 'product_category.parent_id = parent.id')
+            ->leftJoin('product_category_name AS parent_table', 'product_category.parent_id = parent_table.id')
             ->leftJoin('lang', 'lang.id = current.lang_id')
             ->where(['lang.name' => Yii::$app->language]);
         // add conditions that should always apply here
@@ -62,8 +62,8 @@ class ProductCategorySearch extends ProductCategory
             'desc' => ['current.name' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['parent'] = [
-            'asc' => ['parent.name' => SORT_ASC],
-            'desc' => ['parent.name' => SORT_DESC],
+            'asc' => ['parent_table.name' => SORT_ASC],
+            'desc' => ['parent_table.name' => SORT_DESC],
         ];
         $this->load($params);
 
@@ -75,14 +75,15 @@ class ProductCategorySearch extends ProductCategory
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'sorted' => $this->sorted,
-            'parent' => $this->parent,
         ]);
 
-        $query->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'parent', $this->parent])
+        $expName = new \yii\db\Expression('(current.name::text)');
+        $expParent = new \yii\db\Expression('(parent_table.name::text)');
+        $expSorted = new \yii\db\Expression('(sorted::text)');
+        $query->andFilterWhere(['ilike', $expName, $this->name])
+            ->andFilterWhere(['ilike', $expParent, $this->parent])
+            ->andFilterWhere(['ilike', $expSorted, $this->sorted])
         ;
 
         return $dataProvider;

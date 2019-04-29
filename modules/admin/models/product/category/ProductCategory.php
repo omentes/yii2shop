@@ -21,7 +21,6 @@ use Yii;
 class ProductCategory extends \yii\db\ActiveRecord
 {
     public $name;
-    public $lang;
     public $parent;
 
     /**
